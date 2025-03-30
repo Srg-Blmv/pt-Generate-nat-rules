@@ -44,7 +44,7 @@ def get_nat_rules():
 
     payload = {
         "deviceGroupId": global_gr_id,
-        "precedence": "pre",
+        "precedence": f"{precedence}",
         "offset": 0,
         "limit": 100000
     }
@@ -55,7 +55,7 @@ def get_nat_rules():
 
         data = response.json()
         ########  ЕСЛИ НУЖНО УДАЛИТЬ SNAT то необходимо заменить "dnat" на "snat"
-        nat_rules = [obj["id"] for obj in data["items"] if obj["name"].startswith("dnat")]
+        nat_rules = [obj["id"] for obj in data["items"] if obj["name"].startswith(prefix_name_nat_rule)]
         return nat_rules
     else:
         print(f"Error: {response.status_code} - {response.text}")
@@ -83,5 +83,7 @@ def main():
 mgmt_ip = "192.168.1.100"
 mgmt_login =  "admin"
 mgmt_pass = "xxXX1234$"
+prefix_name_nat_rule = "src"   # dnat  or snat 
+precedence = "post"            # post or pre
 
 main()

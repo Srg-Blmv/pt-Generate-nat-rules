@@ -96,7 +96,7 @@ def main():
 
         payload = json.dumps({
             "deviceGroupId": f"{global_gr_id}",
-            "precedence":"pre",
+            "precedence": f"{precedence}",
             "position": x+1,
             "enabled": True,
             "name": f"dnat_{x}",
@@ -157,5 +157,6 @@ mgmt_ip = "192.168.1.100"
 mgmt_login =  "admin"
 mgmt_pass = "xxXX1234$"
 zone_name = "Trusted"
+precedence   = "pre"        # pre or post
 
 main()

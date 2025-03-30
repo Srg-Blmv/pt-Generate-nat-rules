@@ -96,8 +96,8 @@ def main():
     for x in range(len(src_objects)):
         payload = json.dumps({
             "deviceGroupId": f"{global_gr_id}",
-            "precedence":"post",
-            "position": x+1,
+            "precedence":f"{precedence}",
+            "position": x,
             "enabled": True,
             "name": f"src_{x}",
             "description": "",
@@ -159,5 +159,6 @@ mgmt_login =  "admin"
 mgmt_pass = "xxXX1234$"
 src_zone_name = "Trusted"
 dst_zone_name = "Untrusted"
+precedence   = "pre"
 
 main()
