@@ -5,15 +5,15 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+
 global_gr_id = ""
 cookies = ""
 headers = {"Content-Type": "application/json"}
 
 def auth():
     global global_gr_id, cookies
-
-    url = f"https://{mgmt_ip}/api/v2/Login"
     
+    url = f"https://{mgmt_ip}/api/v2/Login"
     payload = {
         "login": mgmt_login,
         "password": mgmt_pass
@@ -22,20 +22,16 @@ def auth():
     response_auth = requests.post(url, json=payload, headers=headers, verify=False)
     if response_auth.status_code == 200:
         print("auth ok")
+        payload = {}
         url =  f"https://{mgmt_ip}/api/v2/GetDeviceGroupsTree"
-        r = requests.post(url, headers=headers, verify=False, cookies=response_auth.cookies)
+        r = requests.post(url, headers=headers, json=payload, verify=False, cookies=response_auth.cookies)
         cookies = response_auth.cookies
         # ПОЛУЧАЕМ ID глобальной группы
         global_gr_id = r.json()['groups'][0]['id']
-        # Пример 1 группы в глобальной:
-        # global_gr_id = (r.json()['groups'][0].get("subgroups")[0].get('id'))
-        # Или заберите нужное ID через web api интерфейс: https://IP_MGMT/apidoc/v2/ui/#tag/device-groups/POST/api/v2/GetDeviceGroupsTree
 
     else:
         print("auth fail")
         exit()
-
-
 # GET DNAT RULES
 
 
@@ -83,7 +79,7 @@ def main():
 mgmt_ip = "192.168.1.100"
 mgmt_login =  "admin"
 mgmt_pass = "xxXX1234$"
-prefix_name_nat_rule = "src"   # dnat  or snat 
-precedence = "post"            # post or pre
+prefix_name_nat_rule = "dnat"   # dnat  or snat 
+precedence = "pre"            # post or pre
 
 main()

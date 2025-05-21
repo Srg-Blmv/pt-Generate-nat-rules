@@ -19,10 +19,11 @@ headers = {"Content-Type": "application/json"}
 
 response_auth = requests.post(url, json=payload, headers=headers, verify=False)
 if response_auth.status_code == 200:
-  print("auth ok")
-  url =  f"https://{mgmt_ip}/api/v2/GetDeviceGroupsTree"
-  r = requests.post(url, headers=headers, verify=False, cookies=response_auth.cookies)
-  global_gr_id = r.json()['groups'][0]['id']
+    print("auth ok")
+    payload = {}
+    url =  f"https://{mgmt_ip}/api/v2/GetDeviceGroupsTree"
+    r = requests.post(url, headers=headers, json=payload, verify=False, cookies=response_auth.cookies)
+    global_gr_id = r.json()['groups'][0]['id']
 
 
 
